@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen práctico dp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+    <!-- RESULTADOS -->
+    <script src="{{ url_for('static', filename='js/result.js') }}"></script>
+
+    <!-- FORMULARIO PARA AGREGAR DATOS A LA TABLA -->
+    <div class="section formulario_dis">
+        <div class="content">
+            <!-- FORMULARIO PARA AGREGAR DATOS A LA TABLA -->
+            <h1>Agregar distribuidor</h1>
+            <form action="/user" method="POST">
+                <input id="identifier" name="identifier" class="form-control" type="text" placeholder="Identificador" required>
+                <input id="name" name="name" class="form-control" type="text" placeholder="Nombre" required>
+                <input id="middle_name" name="middle_name" class="form-control" type="text" placeholder="Segundo nombre">
+                <input id="paternal_surname" name="paternal_surname" class="form-control" type="text" placeholder="Apellido paterno" required>
+                <input id="maternal_surname" name="maternal_surname" class="form-control" type="text" placeholder="Apellido materno" required>
+                <input id="calle" name="calle" class="form-control" type="text" placeholder="Calle" required>
+                <input id="numero" name="numero" class="form-control" type="text" placeholder="Numero" required>
+                <input id="colonia" name="colonia" class="form-control" type="text" placeholder="Colonia" required>
+                <input id="tel" name="tel" class="form-control" type="tel" placeholder="Teléfono" required>
+                <input id="submit" name="submit" type="submit" value="Agregar">
+            </form>
+        </div>
+    </div>
+
+    <!-- TABLA PARA MOSTRAR CONTENIDO -->
+    <div class="section">
+        <div class="content">
+            <h1>Distribuidores</h1>
+            <table class="table table-striped">
+                <thead>
+                    <th width="10%" class="table_head">Identificador</th>
+                    <th class="table_head">Nombre completo</th>
+                    <th class="table_head">Dirección</th>
+                    <th class="table_head">Teléfono</th>
+                    <th class="table_head">Acciones</th>
+                </thead>
+                <tbody>
+                    {% for d in data %}
+                        <tr>
+                            <td class="table_body">{{d.distributor_id}}</td>
+                            <td class="table_body">{{d.nombre_completo}}</td>
+                            <td class="table_body">{{d.direccion}}</td>
+                            <td class="table_body">{{d.tel}}</td>
+                            <td class="table_body actions">
+                                <!--<a href="{{ url_for('update', id=d.distributor_id) }}">Actualizar</a>-->
+                                <button class="btn btn-primary" id="btn-edit{{d.distributor_id}}" data-bs-toggle="modal" data-bs-target="#modal{{d.distributor_id}}">Editar</button>
+                                <a class="btn btn-danger" href="{{ url_for('delete', id=d.distributor_id) }}">Eliminar</a>
+                            </td>
+                        </tr>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal{{d.distributor_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar {{d.nombre_completo}}</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form action="/update/{{d.person_id}}" method="POST">
+                                        <div class="modal-body">
+                                            <input id="calleUpdate" name="calleUpdate" class="form-control" type="text" placeholder="Calle">
+                                            <input id="numeroUpdate" name="numeroUpdate" class="form-control" type="text" placeholder="Numero">
+                                            <input id="coloniaUpdate" name="coloniaUpdate" class="form-control" type="text" placeholder="Colonia">
+                                            <input id="telUpdate" name="telUpdate" class="form-control" type="tel" placeholder="Teléfono">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>

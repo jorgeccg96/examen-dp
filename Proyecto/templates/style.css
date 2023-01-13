@@ -1,0 +1,15 @@
+/* Global styles */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif;}
+.section{position:relative;}
+.content{position:relative;max-width:1300px;margin:auto;}
+
+/* RESPONSIVE STYLE */
+@media (max-width: 599px){}
+@media (max-width:899px) and (min-width: 600px){}
+@media (max-width:1199px) and (min-width: 900px){}
+
+@media (max-width:1399px) and (min-width: 1200px){
+    .content{padding:4rem}
+}
+
+@media (min-width:1400px){}
